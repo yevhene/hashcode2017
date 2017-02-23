@@ -1,6 +1,12 @@
 module.exports = function(model) {
+  for (let i = 0, dlen = model.demands.length; i < dlen; i++) {
+    const demand = model.demands[i];
+    const video_size = model.videos[demand.video_id];
+    demand.video_size = video_size;
+  }
+
   model.demands.sort((a, b) =>
-    b.requests_count - a.requests_count
+    (b.requests_count / b.video_size) - (a.requests_count / a.video_size)
   );
 
   for (let i = 0; i < model.info.endpoints_count; i++) {

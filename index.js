@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const reader = require('./src/reader');
-const solver = require('./src/solvers/rating');
+const solver = require('./src/solvers/simple');
 const formatter = require('./src/formatter');
 
 const inFile = process.argv[2];
@@ -13,6 +13,6 @@ const caches = solver(model);
 const output = formatter(caches);
 
 const outFileName = path.basename(inFile, path.extname(inFile));
-const outFile = path.join(__dirname, 'out', `${outFileName}.out`);
+const outFile = path.join(__dirname, 'out/optimized', `${outFileName}.out`);
 
 fs.writeFileSync(outFile, output);
