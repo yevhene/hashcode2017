@@ -6,7 +6,7 @@ module.exports = function(model) {
   }
 
   model.demands.sort((a, b) =>
-    (b.requests_count / b.video_size) - (a.requests_count / a.video_size)
+    (b.requests_count / Math.sqrt(b.video_size)) - (a.requests_count / Math.sqrt(a.video_size))
   );
 
   for (let i = 0; i < model.info.endpoints_count; i++) {
