@@ -1,7 +1,6 @@
 const fs = require('fs');
 
-module.exports = function(path) {
-  const file = fs.readFileSync(path).toString();
+module.exports = function(file) {
   const lines = file.split('\n');
   const model = {};
 

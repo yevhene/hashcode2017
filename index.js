@@ -1,11 +1,18 @@
+const fs = require('fs');
 const path = require('path');
 
 const reader = require('./src/reader');
 const solver = require('./src/solvers/simple');
+const formatter = require('./src/formatter');
 
-const input = path.join(__dirname, process.argv[2]);
+const inFile = process.argv[2];
+const input = fs.readFileSync(path.join(__dirname, inFile)).toString()
 
 const model = reader(input);
-const solution = solver(model);
+const caches = solver(model);
+const output = formatter(caches);
 
-console.log(JSON.stringify(solution));
+const outFileName = path.basename(inFile, path.extname(inFile));
+const outFile = path.join(__dirname, 'out', `${outFileName}.out`);
+
+fs.writeFileSync(outFile, output);
