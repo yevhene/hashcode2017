@@ -6,7 +6,7 @@ module.exports = function(model) {
   }
 
   model.demands.sort((a, b) =>
-    (b.requests_count / Math.sqrt(b.video_size)) - (a.requests_count / Math.sqrt(a.video_size))
+    b.requests_count - a.requests_count
   );
 
   for (let i = 0; i < model.info.endpoints_count; i++) {
@@ -32,7 +32,7 @@ module.exports = function(model) {
     for (let j = 0, clen = endpoint.connections.length; j < clen; j++) {
       const connection = endpoint.connections[j];
       if (connection.cache_id === undefined) {
-        break;
+        continue;
       }
 
       const cache = caches[connection.cache_id];
