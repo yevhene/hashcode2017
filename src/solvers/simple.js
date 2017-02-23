@@ -30,6 +30,10 @@ module.exports = function(model) {
       }
 
       const cache = caches[connection.cache_id];
+      if (cache.videos.indexOf(demand.video_id) !== -1) {
+        break;
+      }
+
       if (cache.free >= video_size) {
         cache.videos.push(demand.video_id);
         cache.free -= video_size;
