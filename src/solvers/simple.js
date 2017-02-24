@@ -1,10 +1,4 @@
 module.exports = function(model) {
-  for (let i = 0, dlen = model.demands.length; i < dlen; i++) {
-    const demand = model.demands[i];
-    const video_size = model.videos[demand.video_id];
-    demand.video_size = video_size;
-  }
-
   model.demands.sort((a, b) =>
     b.requests_count - a.requests_count
   );
@@ -32,7 +26,7 @@ module.exports = function(model) {
     for (let j = 0, clen = endpoint.connections.length; j < clen; j++) {
       const connection = endpoint.connections[j];
       if (connection.cache_id === undefined) {
-        continue;
+        break;
       }
 
       const cache = caches[connection.cache_id];
