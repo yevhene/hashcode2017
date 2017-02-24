@@ -23,6 +23,7 @@ module.exports = function(model) {
     const video_size = model.videos[demand.video_id];
     const endpoint = model.endpoints[demand.endpoint_id];
 
+    let isAlreadyCached = false;
     for (let j = 0, clen = endpoint.connections.length; j < clen; j++) {
       const connection = endpoint.connections[j];
       if (connection.cache_id === undefined) {
@@ -31,9 +32,22 @@ module.exports = function(model) {
 
       const cache = caches[connection.cache_id];
       if (cache.videos.indexOf(demand.video_id) !== -1) {
+        isAlreadyCached = true;
+        break;
+      }
+    }
+
+    if (isAlreadyCached) {
+      continue;
+    }
+
+    for (let j = 0, clen = endpoint.connections.length; j < clen; j++) {
+      const connection = endpoint.connections[j];
+      if (connection.cache_id === undefined) {
         break;
       }
 
+      const cache = caches[connection.cache_id];
       if (cache.free >= video_size) {
         cache.videos.push(demand.video_id);
         cache.free -= video_size;
